@@ -86,21 +86,10 @@ function textColor($color){
 /*Retrieve URL for promo image*/
 /*........................*/
 function getURL($serverName, $image){
-  $urlStart = 'http://img2.email2inbox.co.uk/2017/stonegate/01/promo/';
+  $urlStart = 'http://img2.email2inbox.co.uk/2016/stonegate/templates/';
   $urlEnd = '/' . $image;
 
-  if(($serverName === 'finnegans_wake') || ($serverName === 'rosies')){
-    return $urlStart . 'colors' . $urlEnd;
-  } else if(($serverName === 'halfway_to_heaven') || ($serverName === 'queens_court') || ($serverName === 'two_brewers')){
-    return $urlStart . 'charles_street' . $urlEnd;
-  } else if(($serverName === 'marys')){
-    return $urlStart . 'admiral_duncan' . $urlEnd;
-  } else if(($serverName === 'pit_and_pendulum') || ($serverName === 'retro_bar') || ($serverName === 'rupert_street') || ($serverName === 'slains_castle') || ($serverName === 'via')){
-    return $urlStart . 'beduin' . $urlEnd;
-  }
-  else{
-    return $urlStart . $serverName . $urlEnd;
-  }
+  return $urlStart . $serverName . $urlEnd;
 }
 
 /*........................*/
@@ -130,8 +119,8 @@ function marginBuilder($block){
 function lineSpacerBuild($parentFolder){
   $spacer = file_get_contents('../sites/_defaults/spacer.html');
 
-  $voucher = file_get_contents('../sites/' . $parentFolder . '/bespoke_blocks/' . $parentFolder . '_voucher.html');
-  preg_match('/BG Right: (.*)/', $voucher, $matches);
+  $template = file_get_contents('../sites/' . $parentFolder . '/templates/' . $parentFolder . '_branded.html');
+  preg_match('/"emailBackground": "(.*)"/', $template, $matches);
   $color = $matches[1];
 
   $style='border-top: 1px dotted ' . $color . ';';
