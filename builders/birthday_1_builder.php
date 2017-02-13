@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Birthday 1
-foreach(glob("../sites/*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/proper_pubs_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 

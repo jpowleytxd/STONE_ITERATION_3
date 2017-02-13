@@ -7,7 +7,7 @@ $imageBlock = file_get_contents("../sites/_defaults/image.html");
 $imageBlock = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', 'http://placehold.it/600x338', $imageBlock);
 $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
 
-foreach(glob('../sites/*/templates/*_branded.html') as $filename){
+foreach(glob('../sites/*/templates/proper_pubs_branded.html') as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
