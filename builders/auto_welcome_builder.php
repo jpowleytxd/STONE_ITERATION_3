@@ -2,8 +2,8 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
-for($i = 1; $i <= 1; $i++){
-  foreach(glob("../sites/*/templates/proper_pubs_branded.html") as $filename){
+for($i = 1; $i <= 2; $i++){
+  foreach(glob("../sites/*/templates/*_branded.html") as $filename){
     $template = file_get_contents($filename);
     $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -16,7 +16,8 @@ for($i = 1; $i <= 1; $i++){
     }
 
     //Get copy data
-    $initialQuery = "SELECT * FROM `copy_iteration3_proper_pubs` WHERE `email` = '" . $email . "'";
+    $table = 'copy_iteration3_' . $brand;
+    $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
     $rows = databaseQuery($initialQuery);
     foreach($rows as $key => $row){
       $autoRows = $row;
@@ -75,7 +76,8 @@ for($i = 1; $i <= 1; $i++){
       $textColor = $color;
       $autoRows[7] = str_replace('"', '', $autoRows[7]);
       $textTwo = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $autoRows[7], $textTwo);
-      $textTwo = preg_replace('/##(.+?)##/m', '<p>$1</p>', $textTwo);
+      $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+      $textTwo = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textTwo);
       $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
       $textTwo = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textTwo);
       $textTwo = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textTwo);

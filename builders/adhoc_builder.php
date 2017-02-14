@@ -7,7 +7,7 @@ $imageBlock = file_get_contents("../sites/_defaults/image.html");
 $imageBlock = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', 'http://placehold.it/600x338', $imageBlock);
 $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
 
-foreach(glob('../sites/*/templates/proper_pubs_branded.html') as $filename){
+foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -33,7 +33,7 @@ foreach(glob('../sites/*/templates/proper_pubs_branded.html') as $filename){
   $textColor = $color;
 
   $basicText = file_get_contents('../sites/_defaults/text.html');
-  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
+  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial; line-height: 130%;"';
   $basicText = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $basicText);
   $basicText = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $basicText);
   $basicText = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $basicText);

@@ -7,7 +7,7 @@ $imageBlock = file_get_contents('../sites/_defaults/image.html');
 $imageBlock = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', 'http://img2.email2inbox.co.uk/2016/stonegate/templates/eb_placeholder.jpg', $imageBlock);
 
 //Loop for all branded templates
-foreach(glob('../sites/*/templates/proper_pubs_branded.html') as $filename){
+foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 

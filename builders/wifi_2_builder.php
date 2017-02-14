@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Wifi 2
-foreach(glob("../sites/*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -11,7 +11,8 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   //Get content
   $wifiRows = null;
   $email ="WIFI sign in 2 + 7 Days";
-  $initialQuery = "SELECT * FROM `copy_iteration3_proper_pubs` WHERE `email` = '" . $email . "'";
+  $table = 'copy_iteration3_' . $brand;
+  $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $wifiRows = $row;
@@ -36,7 +37,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   //Prep Image
   $image = file_get_contents('../sites/_defaults/image.html');
   $promo = $image;
-  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'shot.png'), $image);
+  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'wifi.png'), $image);
 
   //Prep Spacers
   $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');

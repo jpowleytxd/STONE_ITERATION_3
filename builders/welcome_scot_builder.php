@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 for($i = 1; $i <= 3; $i++){
-  foreach(glob("../sites/*/templates/*_branded.html") as $filename){
+  foreach(glob("../sites/*/templates/proper_pubs_branded.html") as $filename){
     $template = file_get_contents($filename);
     $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -18,7 +18,8 @@ for($i = 1; $i <= 3; $i++){
     }
 
     $welcomeRows = null;
-    $initialQuery = "SELECT * FROM `copy_iteration1_all` WHERE `email` = '" . $email. "'";
+    $table = 'copy_iteration3_' . $brand;
+    $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
     $rows = databaseQuery($initialQuery);
     foreach($rows as $key => $row){
       $welcomeRows = $row;
@@ -57,8 +58,9 @@ for($i = 1; $i <= 3; $i++){
     $welcomeRows[5] = str_replace('"', '', $welcomeRows[5]);
     $welcomeRows[5] = str_replace("'", '&apos;', $welcomeRows[5]);
     $textOne = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $welcomeRows[5], $textOne);
-    $textOne = preg_replace('/##(.+?)##/m', '<p>$1</p>', $textOne);
-    $styleInsert = 'style="color: ' . $textColor . ';font-weight: bold; font-family: arial;"';
+    $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+    $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
+    $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
     $textOne = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textOne);
     $textOne = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textOne);
     $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
@@ -78,10 +80,11 @@ for($i = 1; $i <= 3; $i++){
     //Prep Text Two
     $welcomeRows[8] = str_replace('"', '', $welcomeRows[8]);
     $textTwo = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $welcomeRows[8], $textTwo);
-    $textTwo = preg_replace('/##(.+?)##/m', '<p>$1</p>', $textTwo);
-    $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . '">click here</a>';
+    $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+    $textTwo = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textTwo);
+    $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . '; text-decoration: underline; font-weight: normal;"><span style="color: ' . $textColor . '; text-decoration: underline; font-weight: normal;">click here</span></a>';
     $textTwo = str_replace('click here', $linkInsert, $textTwo);
-    $styleInsert = 'style="color: ' . $textColor . ';font-weight: bold; font-family: arial;"';
+    $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
     $textTwo = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textTwo);
     $textTwo = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textTwo);
     $textTwo = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textTwo);

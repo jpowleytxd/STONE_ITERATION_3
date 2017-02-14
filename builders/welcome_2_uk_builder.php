@@ -3,14 +3,15 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Welcome 2 UK
-foreach(glob("../sites/*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
   //Get content
   $welcomeRows = null;
   $email ="Welcome 2 + 7 Days";
-  $initialQuery = "SELECT * FROM `copy_iteration3_proper_pubs` WHERE `email` = '" . $email . "'";
+  $table = 'copy_iteration3_' . $brand;
+  $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $welcomeRows = $row;

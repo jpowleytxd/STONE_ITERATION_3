@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 
-foreach(glob("../sites/*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -11,7 +11,8 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   //Get copy data
   $passwordRows = null;
-  $initialQuery = "SELECT * FROM `copy_iteration3_proper_pubs` WHERE `email` = '" . $email. "'";
+  $table = 'copy_iteration3_' . $brand;
+    $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $passwordRows = $row;
@@ -54,7 +55,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $textOne = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textOne);
   $textOne = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textOne);
   $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
-  $link = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . '; text-decoration: none;"><span style="text-decoration: underline;">Click here</span></a>';
+  $link = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . '; text-decoration: none; font-weight: normal"><span style="color: ' . $textColor . '; text-decoration: underline; font-weight: normal;">Click here</span></a>';
   $textOne = str_replace('Click here', $link, $textOne);
 
   //Build email html

@@ -3,14 +3,15 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Welcome 2 UK
-foreach(glob("../sites/*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
   //Get content
   $welcomeRows = null;
   $email ="Welcome 3 + 21 Days";
-  $initialQuery = "SELECT * FROM `copy_iteration3_proper_pubs` WHERE `email` = '" . $email . "'";
+  $table = 'copy_iteration3_' . $brand;
+  $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $welcomeRows = $row;
@@ -34,7 +35,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   //Prep Images
   $image = file_get_contents('../sites/_defaults/image.html');
-  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getHeroImageURL($brand), $image);
+  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'party.png'), $image);
 
   //Prep Spacer
   $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
@@ -77,7 +78,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $textTwo = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $welcomeRows[7], $textTwo);
   $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
   $textTwo = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textTwo);
-  $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . ';text-decoration: none;">Click Here</a>';
+  $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . ';text-decoration: none; font-weight: normal;">,span style="color: ' . $textColor . ';text-decoration: none; font-weight: normal;">Click Here</span></a>';
   $textTwo = str_replace('click here', $linkInsert, $textTwo);
   $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
   $textTwo = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textTwo);
