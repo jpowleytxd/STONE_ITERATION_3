@@ -49,6 +49,9 @@ for($i = 1; $i <= 2; $i++){
     $lineSpacer = lineSpacerBuild($brand);
 
     //Prep All Text
+    preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
+    $color = $matches[1][0];
+    $textColor = $color;
     $basicText = file_get_contents('../sites/_defaults/text.html');
     $textOne = $textTwo = $basicText;
 

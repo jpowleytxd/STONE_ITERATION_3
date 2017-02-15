@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Birthday 2
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -43,6 +43,9 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $largeSpacer = str_replace('<td align="center" height="20" valign="middle"></td>', '<td align="center" height="40" valign="middle"></td>', $emptySpacer);
 
   //Prep All Text
+  preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
+  $color = $matches[1][0];
+  $textColor = $color;
   $basicText = file_get_contents('../sites/_defaults/text.html');
   $textOne = $textTwo = $basicText;
 
@@ -64,7 +67,9 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
   $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
   $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
-  $voucher = marginBuilder($voucher);
+  if(strpos($filename, 'proper_pubs') !== false){
+    $voucher = marginBuilder($voucher);
+  }
 
   //Prep Text Two
   preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);

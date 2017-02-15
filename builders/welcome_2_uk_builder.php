@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Welcome 2 UK
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -58,7 +58,7 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $textColor = $color;
   $welcomeRows[5] = str_replace('"', '', $welcomeRows[5]);
   $textOne = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $welcomeRows[5], $textOne);
-  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; line-height: 140%;"';
   $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
   $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/party" style="color: ' . $textColor . '; font-weight: bold; text-decoration: none;"><span style="text-decoration: underline;">Find out how we can make it your best ever.</span></a>';
   $textOne = str_replace('Find out how we can make it your best ever.', $linkInsert, $textOne);

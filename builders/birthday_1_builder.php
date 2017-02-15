@@ -40,8 +40,12 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   //Prep Spacer
   $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
   $largeSpacer = str_replace('<td align="center" height="20" valign="middle"></td>', '<td align="center" height="40" valign="middle"></td>', $emptySpacer);
+  $lineSpacer = lineSpacerBuild($brand);
 
   //Prep All Text
+  preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
+  $color = $matches[1][0];
+  $textColor = $color;
   $basicText = file_get_contents('../sites/_defaults/text.html');
   $textOne = $textTwo = $basicText;
 
@@ -59,16 +63,19 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
 
   //Prep Voucher
-  $voucherInstructions = $birthdayRows[9];
-  $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
-  $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-  $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
-  $voucher = str_replace('$vouchercode$', $birthdayRows[10], $voucher);
-  $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
-  $voucher = preg_replace($search, '', $voucher);
-  $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
-  $voucher = preg_replace($search, '', $voucher);
-  $voucher = marginBuilder($voucher);
+  $voucher = null;
+  if(strpos($filename, 'proper_pubs') !== false){
+    $voucherInstructions = $birthdayRows[9];
+    $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+    $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+    $voucher = str_replace('$vouchercode$', $birthdayRows[10], $voucher);
+    $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
+    $voucher = preg_replace($search, '', $voucher);
+    $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
+    $voucher = preg_replace($search, '', $voucher);
+    $voucher = marginBuilder($voucher);
+  }
 
 
   //Prep Text Two
@@ -97,7 +104,11 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $terms = preg_replace('/<td valign="top">/', '<td valign="top" align="center" ' . $styleInsert . '>', $terms);
 
   //Insert content into template
-  $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer . $voucher . $largeSpacer . $textTwo . $largeSpacer;
+  if(strpos($filename, 'proper_pubs') !== false){
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer . $voucher . $largeSpacer . $textTwo . $largeSpacer;
+  } else{
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
+  }
   $search = "/<!-- User Content: Main Content Start -->\s*<!-- User Content: Main Content End -->/";
   $output = preg_replace($search, "<!-- User Content: Main Content Start -->" . $insert . "<!-- User Content: Main Content End -->", $template);
 

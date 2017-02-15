@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Wifi 1
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -69,7 +69,9 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
   $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
   $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
-  $voucher = marginBuilder($voucher);
+  if(strpos($filename, 'proper_pubs') !== false){
+    $voucher = marginBuilder($voucher);
+  }
 
   //Prep Text Two
   $wifiRows[7] = str_replace('"', '', $wifiRows[7]);

@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Wifi 3
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -52,7 +52,7 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $textColor = $color;
   $wifiRows[5] = str_replace('"', '', $wifiRows[5]);
   $textOne = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $wifiRows[5], $textOne);
-  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; line-height: 130%;"';
   $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
   $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
   $textOne = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textOne);
@@ -69,7 +69,9 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $voucher = preg_replace($search, '', $voucher);
   $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
   $voucher = preg_replace($search, '', $voucher);
-  $voucher = marginBuilder($voucher);
+  if(strpos($filename, 'proper_pubs') !== false){
+    $voucher = marginBuilder($voucher);
+  }
 
   //Prep Text Two
   preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);

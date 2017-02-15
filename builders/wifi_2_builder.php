@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Wifi 2
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 

@@ -123,6 +123,10 @@ function lineSpacerBuild($parentFolder){
   preg_match('/"emailBackground": "(.*)"/', $template, $matches);
   $color = $matches[1];
 
+  if($parentFolder === 'TPK'){
+    $color= "#474843";
+  }
+
   $style='border-top: 1px dotted ' . $color . ';';
 
   $spacer = preg_replace('/background-color:.*?;/', '', $spacer);
@@ -160,6 +164,34 @@ function getHeroImageURL($brand){
   $urlEnd = '/hero.jpg';
 
   return $urlStart . $brand . $urlEnd;
+}
+
+/*........................*/
+/*Voucher Builder*/
+/*........................*/
+function buildVoucher($contentRows, $brand){
+  if(($contentRows[10] !== null) && ($contentRows[10] !== '')){
+    $voucherInstructions = $contentRows[9];
+    $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+    $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+    $voucher = str_replace('$vouchercode$', $contentRows[10], $voucher);
+    $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
+    $voucher = preg_replace($search, '', $voucher);
+    $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
+    $voucher = preg_replace($search, '', $voucher);
+    // $voucher = marginBuilder($voucher);
+
+    return $voucher;
+  } else{
+    $voucherInstructions = $contentRows[9];
+    $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+    $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+    // $voucher = marginBuilder($voucher);
+
+    return $voucher;
+  }
 }
 
  ?>

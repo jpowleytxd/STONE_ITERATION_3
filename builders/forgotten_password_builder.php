@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -44,6 +44,9 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $largeSpacer = str_replace('<td align="center" height="20" valign="middle"></td>', '<td align="center" height="40" valign="middle"></td>', $emptySpacer);
 
   //Prep All Text
+  preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
+  $color = $matches[1][0];
+  $textColor = $color;
   $textOne = file_get_contents('../sites/_defaults/text.html');
 
   //Prep Text One

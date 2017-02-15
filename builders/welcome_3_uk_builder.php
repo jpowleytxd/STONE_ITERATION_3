@@ -3,7 +3,7 @@ ini_set('max_execution_time', 3000);
 include 'common.php';
 
 //Welcome 2 UK
-foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
+foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
   $brand = preg_replace('/.*?\/.*?\/(.*?)\/.*/', '$1', $filename);
 
@@ -42,6 +42,9 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $largeSpacer = str_replace('<td align="center" height="20" valign="middle"></td>', '<td align="center" height="40" valign="middle"></td>', $emptySpacer);
 
   //Prep All Text
+  preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
+  $color = $matches[1][0];
+  $textColor = $color;
   $basicText = file_get_contents('../sites/_defaults/text.html');
   $textOne = $textTwo = $basicText;
 
@@ -78,7 +81,7 @@ foreach(glob("../sites/proper_pubs_*/templates/*_branded.html") as $filename){
   $textTwo = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $welcomeRows[7], $textTwo);
   $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
   $textTwo = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textTwo);
-  $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . ';text-decoration: none; font-weight: normal;">,span style="color: ' . $textColor . ';text-decoration: none; font-weight: normal;">Click Here</span></a>';
+  $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . ';text-decoration: underline; font-weight: bold;"><span style="color: ' . $textColor . ';text-decoration: underline; font-weight: bold;">click here</span></a>';
   $textTwo = str_replace('click here', $linkInsert, $textTwo);
   $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
   $textTwo = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textTwo);
