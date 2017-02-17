@@ -2,6 +2,9 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
+$saveToFile = $_POST['saveStatus'];
+$returnString = null;
+
 //Wifi 1
 foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
@@ -36,7 +39,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   //Prep Image
   $image = file_get_contents('../sites/_defaults/image.html');
   $promo = $image;
-  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'wifi.png'), $image);
+  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'wifi_1.png'), $image);
 
   //Prep Spacers
   $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
@@ -103,10 +106,14 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   $append = "wifi_1_day";
   $path = "pre_made";
-  $save = false;
+  $save = $saveToFile;
 
   sendToFile($output, $path, $append, $brand, '.html', $save);
 
-  print_r($output);
+  // print_r($output);
+  $returnString .= $output;
 }
+
+echo $returnString;
+
  ?>

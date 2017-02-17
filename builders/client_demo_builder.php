@@ -2,6 +2,9 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
+$saveToFile = $_POST['saveStatus'];
+$returnString = null;
+
 function getStyle($brand){
     $regular = '<style type="text/css">
                 body{padding: 0; margin: 0;}
@@ -104,11 +107,14 @@ foreach(glob("../pre_made/*/*.html") as $filename){
 
   $append = $templateType;
   $path = "client.demo";
-  $save = false;
+  $save = $saveToFile;
 
   sendToFile($output, $path, $append, $brand, '.html', $save);
 
-  print_r($output);
+  // print_r($output);
+  $returnString .= $output;
 }
+
+echo $returnString;
 
  ?>

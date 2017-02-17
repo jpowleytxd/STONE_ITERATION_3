@@ -2,6 +2,9 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
+$saveToFile = $_POST['saveStatus'];
+$returnString = null;
+
 //Welcome 2 UK
 foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $template = file_get_contents($filename);
@@ -35,7 +38,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   //Prep Images
   $image = file_get_contents('../sites/_defaults/image.html');
-  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'party.png'), $image);
+  $image = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'welcome_3_uk.png'), $image);
 
   //Prep Spacer
   $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
@@ -71,7 +74,9 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $voucher = preg_replace($search, '', $voucher);
   $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
   $voucher = preg_replace($search, '', $voucher);
-  $voucher = marginBuilder($voucher);
+  if(strpos($filename, 'proper_pubs') !== false){
+    $voucher = marginBuilder($voucher);
+  }
 
   //Prep Text Two
   preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
@@ -105,11 +110,14 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   $append = "welcome_21_days_uk";
   $path = "pre_made";
-  $save = false;
+  $save = $saveToFile;
 
   sendToFile($output, $path, $append, $brand, '.html', $save);
 
-  print_r($output);
+  // print_r($output);
+  $returnString .= $output;
 }
+
+echo $returnString;
 
  ?>
