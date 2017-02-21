@@ -5,8 +5,8 @@ include 'common.php';
 $saveToFile = $_POST['saveStatus'];
 
 $sql = null;
-foreach (glob("../pre_made/*/wifi_7_days.html") as $filename) {
-  $temp = file_get_contents($filename);#
+foreach (glob("../pre_made/*/welcome_1_day_scot.html") as $filename) {
+  $temp = file_get_contents($filename);
 
   //Get brand and type names
   preg_match_all('/.*?\/.*?\/(.*?)\/(.*?).html/', $filename, $matches);
@@ -26,8 +26,8 @@ foreach (glob("../pre_made/*/wifi_7_days.html") as $filename) {
   //Email type fix
   $type = str_replace('_', ' ', $type);
   $type = ucwords($type);
-  if($type === 'Wifi 7 Days'){
-    $type = "WIFI sign in 2 + 7 Days";
+  if($type === 'Welcome 1 Day Scot'){
+    $type = "Welcome 1 + 1 Day (Scot)";
   }
 
   //Get account data
@@ -47,20 +47,20 @@ foreach (glob("../pre_made/*/wifi_7_days.html") as $filename) {
   }
 
   //Get Email content
-  $email = 'WIFI sign in 2 + 7 Days';
-  $wifiRows = null;
+  $email = 'Welcome 1 + 1 Day (Scot)';
+  $welcomeRows = null;
   $initialQuery = "SELECT * FROM `copy_iteration1_all` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
-    $wifiRows = $row;
+    $welcomeRows = $row;
     break;
   }
   $subject = null;
   $voucher = null;
   $preHeader = null;
-  foreach($wifiRows as $key => $row){
-    $subject = $wifiRows[3];
-    $preHeader = $wifiRows[4];
+  foreach($welcomeRows as $key => $row){
+    $subject = $welcomeRows[3];
+    $preHeader = $welcomeRows[4];
     $voucher = '0';
   }
 
@@ -76,7 +76,7 @@ foreach (glob("../pre_made/*/wifi_7_days.html") as $filename) {
           values('" . $accountID . "', '1', '" . $temp . "', '', '" . $name . "', '', '" . date("Y-m-d H:i:s") . "', '" . date("Y-m-d H:i:s") . "', '1', '" . $subject . "', '', '" . date("Y-m-d H:i:s") . "', '" . $profileID . "', '', '', '', '', '', '', '', '', '0', '1', '" . $voucher . "', '" . $settings . "', '" . $mappings . "');\n";
 }
 
-$append = "wifi_2_insert";
+$append = "welcome_1_day_scot_insert";
 $path = "inserts";
 $save = $saveToFile;
 
