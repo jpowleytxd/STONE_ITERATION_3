@@ -17,6 +17,7 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   preg_match('/"contentBackground": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
   $color = $matches[1][0];
   $textColor = textColor($color);
+  $font = preg_replace('/"h1FontFamily": "(.*)"/', '$1', $filename);
 
   //Prep Heading
   $heading = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_heading.html');
@@ -36,8 +37,9 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $textColor = $color;
 
   $basicText = file_get_contents('../sites/_defaults/text.html');
-  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial; line-height: 130%;"';
+  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . '; line-height: 130%;"';
   $basicText = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $basicText);
+  echo $basicText;
   $basicText = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $basicText);
   $basicText = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $basicText);
 
@@ -54,12 +56,12 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $path = "pre_made";
   $save = $saveToFile;
 
-  sendToFile($output,$path, $append, $brand, '.html', $save);
+  // sendToFile($output,$path, $append, $brand, '.html', $save);
 
   //print_r($output);
   $returnString .= $output;
 }
 
-echo $returnString;
+// echo $returnString;
 
  ?>
