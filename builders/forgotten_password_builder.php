@@ -2,7 +2,7 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
-$saveToFile = $_POST['saveStatus'];
+$saveToFile = true;
 $returnString = null;
 
 foreach(glob("../sites/*/templates/*_branded.html") as $filename){
@@ -25,8 +25,8 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   preg_match('/"contentBackground": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
   $color = $matches[1][0];
   $textColor = textColor($color);
-  preg_match_all('/"paragraphFont": "(.*)"/', $template, $matches);
 
+  preg_match_all('/"paragraphFont": "(.*)"/', $template, $matches);
   $font = $matches[1][0];
 
   //Prep Heading

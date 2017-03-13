@@ -2,7 +2,7 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
-$saveToFile = $_POST['saveStatus'];
+$saveToFile = true;
 $returnString = null;
 
 for($i = 1; $i <= 2; $i++){
@@ -31,6 +31,9 @@ for($i = 1; $i <= 2; $i++){
     preg_match('/"contentBackground": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
     $color = $matches[1][0];
     $textColor = textColor($color);
+
+    preg_match_all('/"paragraphFont": "(.*)"/', $template, $matches);
+    $font = $matches[1][0];
 
     //Prep Heading
     $heading = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_heading.html');
@@ -64,9 +67,9 @@ for($i = 1; $i <= 2; $i++){
     $textColor = $color;
     $autoRows[5] = str_replace('"', '', $autoRows[5]);
     $textOne = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $autoRows[5], $textOne);
-    $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+    $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
     $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
-    $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
+    $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
     $textOne = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textOne);
     $textOne = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textOne);
     $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
@@ -82,14 +85,14 @@ for($i = 1; $i <= 2; $i++){
       $textColor = $color;
       $autoRows[7] = str_replace('"', '', $autoRows[7]);
       $textTwo = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $autoRows[7], $textTwo);
-      $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+      $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
       $textTwo = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textTwo);
-      $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
+      $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
       $textTwo = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textTwo);
       $textTwo = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textTwo);
       $textTwo = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textTwo);
 
-      $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer . $lineSpacer . $largeSpacer . $textTwo . $largeSpacer;
+      $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $textTwo . $largeSpacer;
       $append = "auto_welcome_uk";
     } else if($i === 2){
       $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer;

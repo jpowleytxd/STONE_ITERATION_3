@@ -2,12 +2,10 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
-$saveToFile = $_POST['saveStatus'];
+$saveToFile = true;
 $returnString = null;
 
 //Retrieve generic blocks
-$imageBlock = file_get_contents("../sites/_defaults/image.html");
-$imageBlock = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', 'http://placehold.it/600x338', $imageBlock);
 $emptySpacer = file_get_contents('../sites/_defaults/basic_spacer.html');
 
 foreach(glob('../sites/*/templates/*_branded.html') as $filename){
@@ -18,6 +16,10 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $color = $matches[1][0];
   $textColor = textColor($color);
   $font = preg_replace('/"h1FontFamily": "(.*)"/', '$1', $filename);
+
+  //Prep Image
+  $imageBlock = file_get_contents("../sites/_defaults/image.html");
+  $imageBlock = str_replace('http://img2.email2inbox.co.uk/editor/fullwidth.jpg', getURL($brand, 'adhoc.png'), $imageBlock);
 
   //Prep Heading
   $heading = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_heading.html');
@@ -39,7 +41,6 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $basicText = file_get_contents('../sites/_defaults/text.html');
   $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . '; line-height: 130%;"';
   $basicText = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $basicText);
-  echo $basicText;
   $basicText = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $basicText);
   $basicText = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $basicText);
 
@@ -56,12 +57,12 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
   $path = "pre_made";
   $save = $saveToFile;
 
-  // sendToFile($output,$path, $append, $brand, '.html', $save);
+  sendToFile($output,$path, $append, $brand, '.html', $save);
 
   //print_r($output);
   $returnString .= $output;
 }
 
-// echo $returnString;
+echo $returnString;
 
  ?>

@@ -2,7 +2,7 @@
 ini_set('max_execution_time', 3000);
 include 'common.php';
 
-$saveToFile = $_POST['saveStatus'];
+$saveToFile = true;
 $returnString = null;
 
 //Birthday 2
@@ -25,6 +25,9 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   preg_match('/"contentBackground": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
   $color = $matches[1][0];
   $textColor = textColor($color);
+
+  preg_match_all('/"paragraphFont": "(.*)"/', $template, $matches);
+  $font = $matches[1][0];
 
   //Prep Heading
   $heading = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_heading.html');
@@ -59,9 +62,9 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $textColor = $color;
   $birthdayRows[5] = str_replace('"', '', $birthdayRows[5]);
   $textOne = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $birthdayRows[5], $textOne);
-  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
   $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
-  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
+  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
   $textOne = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textOne);
   $textOne = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textOne);
   $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
@@ -84,11 +87,11 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $textColor = $color;
   $birthdayRows[7] = str_replace('"', '', $birthdayRows[7]);
   $textTwo = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $birthdayRows[7], $textTwo);
-  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px;"';
+  $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
   $textTwo = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textTwo);
   $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . '; text-decoration: font-weight: normal;"><span style="color: ' . $textColor . '; text-decoration: font-weight: normal;">click here</span></a>';
   $textTwo = str_replace('click here', $linkInsert, $textTwo);
-  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: arial;"';
+  $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
   $textTwo = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textTwo);
   $textTwo = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textTwo);
   $textTwo = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textTwo);
@@ -104,7 +107,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $terms = preg_replace('/<td valign="top">/', '<td valign="top" align="center" ' . $styleInsert . '>', $terms);
 
   //Insert content into template
-  $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer . $lineSpacer . $largeSpacer . $textTwo . $largeSpacer;
+  $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
   $search = "/<!-- User Content: Main Content Start -->\s*<!-- User Content: Main Content End -->/";
   $output = preg_replace($search, "<!-- User Content: Main Content Start -->" . $insert . "<!-- User Content: Main Content End -->", $template);
 
