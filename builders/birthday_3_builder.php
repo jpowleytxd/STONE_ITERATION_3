@@ -108,6 +108,9 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   //Insert content into template
   $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
+  if($brand === 'TPK'){
+    $insert = $image . $emptySpacer . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
+  }
   $search = "/<!-- User Content: Main Content Start -->\s*<!-- User Content: Main Content End -->/";
   $output = preg_replace($search, "<!-- User Content: Main Content Start -->" . $insert . "<!-- User Content: Main Content End -->", $template);
 

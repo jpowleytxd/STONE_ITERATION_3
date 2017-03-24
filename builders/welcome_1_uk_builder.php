@@ -109,6 +109,9 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $terms = preg_replace('/<td valign="top">/', '<td valign="top" align="center" ' . $styleInsert . '>', $terms);
 
   $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer . $voucher . $largeSpacer . $textTwo . $largeSpacer;
+  if($brand === 'TPK'){
+    $insert = $image . $emptySpacer . $emptySpacer . $textOne . $largeSpacer . $voucher . $largeSpacer . $textTwo . $largeSpacer;
+  }
 
   $search = "/<!-- User Content: Main Content Start -->\s*<!-- User Content: Main Content End -->/";
   $output = preg_replace($search, "<!-- User Content: Main Content Start -->" . $insert . "<!-- User Content: Main Content End -->", $template);
