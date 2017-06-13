@@ -110,6 +110,8 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
   if($brand === 'TPK'){
     $insert = $image . $emptySpacer . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
+  } else{
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $textTwo . $largeSpacer;
   }
   $search = "/<!-- User Content: Main Content Start -->\s*<!-- User Content: Main Content End -->/";
   $output = preg_replace($search, "<!-- User Content: Main Content Start -->" . $insert . "<!-- User Content: Main Content End -->", $template);

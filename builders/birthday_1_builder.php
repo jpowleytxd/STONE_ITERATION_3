@@ -112,8 +112,11 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $terms = preg_replace('/<td valign="top">/', '<td valign="top" align="center" ' . $styleInsert . '>', $terms);
 
   //Insert content into template
+  $insert;
   if(strpos($filename, 'proper_pubs') !== false){
     $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer . $voucher . $largeSpacer . $textTwo . $largeSpacer;
+  } else if($brand === 'classic_inns'){
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $textTwo . $largeSpacer;
   } else{
     $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
   }

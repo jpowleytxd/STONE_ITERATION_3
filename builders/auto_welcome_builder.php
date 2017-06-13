@@ -92,7 +92,11 @@ for($i = 1; $i <= 2; $i++){
       $textTwo = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textTwo);
       $textTwo = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textTwo);
 
-      $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $textTwo . $largeSpacer;
+      if($brand === 'classic_inns'){
+        $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $textTwo . $largeSpacer;
+      } else{
+          $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $textTwo . $largeSpacer;
+      }
       $append = "auto_welcome_uk";
     } else if($i === 2){
       $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $largeSpacer;

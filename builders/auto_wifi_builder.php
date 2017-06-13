@@ -75,7 +75,12 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   $textTwo = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textTwo);
   $textTwo = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textTwo);
 
-  $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $lineSpacer . $textTwo . $largeSpacer;
+  $insert;
+  if($brand === 'classic_inns'){
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $textTwo . $largeSpacer;
+  } else{
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $lineSpacer . $textTwo . $largeSpacer;
+  }
   $append = "auto_wifi_uk";
 
   //Input content into template

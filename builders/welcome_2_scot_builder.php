@@ -67,6 +67,16 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
     $textOne = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textOne);
     $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
 
+    //Prep Voucher
+    $voucher;
+    if($brand === 'classic_inns'){
+      $voucherInstructions = $welcomeRows[9];
+      $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+      $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+      $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+      // $voucher = marginBuilder($voucher);
+    }
+
     //Prep Text Two
     preg_match('/"paragraphColour": "(.*)"/', $template, $matches, PREG_OFFSET_CAPTURE);
     $color = $matches[1][0];
@@ -92,7 +102,15 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
     $styleInsert = 'style="font-size: 11px; color: ' . $textColor . '"';
     $terms = preg_replace('/<td valign="top">/', '<td valign="top" align="center" ' . $styleInsert . '>', $terms);
 
-    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne .  $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
+    $insert = '';
+    if($brand === 'slug_and_lettuce'){
+      $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $textTwo . $largeSpacer;
+    } else if($brand === 'classic_inns'){
+      $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne .  $largeSpacer . $voucher . $largeSpacer . $textTwo . $largeSpacer;
+    } else{
+      $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne .  $emptySpacer . $lineSpacer . $emptySpacer . $textTwo . $largeSpacer;
+    }
+
     $search = "/<!-- User Content: Main Content Start -->\s*<!-- User Content: Main Content End -->/";
     $output = preg_replace($search, "<!-- User Content: Main Content Start -->" . $insert . "<!-- User Content: Main Content End -->", $template);
 

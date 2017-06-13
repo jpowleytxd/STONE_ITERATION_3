@@ -63,6 +63,8 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
     $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
     $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
     $styleInsert = 'style="color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
+    $linkInsert = '<a href="http://stonegateemail.co.uk/$dynamic3$/website" style="color: ' . $textColor . '; text-decoration: underline; font-weight: bold;"><span style="color: ' . $textColor . '; text-decoration: underline; font-weight: bold;">Find out how we can make it your best ever.</span></a>';
+    $textOne = str_replace('Find out how we can make it your best ever.', $linkInsert, $textOne);
     $textOne = str_replace('<td class="text" align="left" valign="0">', '<td class="text" align="center" valign="0" ' . $styleInsert . '>', $textOne);
     $textOne = str_replace('<tr>', '<tr><td align="center" width="30"></td>', $textOne);
     $textOne = str_replace('</tr>', '<td align="center" width="30"></td></tr>', $textOne);
