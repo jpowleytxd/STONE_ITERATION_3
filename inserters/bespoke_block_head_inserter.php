@@ -6,6 +6,7 @@ $saveToFile = $_POST['saveStatus'];
 
 $sql = null;
 foreach (glob("../sites/*/bespoke_blocks/*.html") as $filename){
+  if(strpos($filename, 'button') === false){
   $temp = file_get_contents($filename);
 
   //get file names
@@ -20,7 +21,7 @@ foreach (glob("../sites/*/bespoke_blocks/*.html") as $filename){
   $temp = preg_replace('/<!-- VenueEnd -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedStart -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedEnd -->/ms', '', $temp);
-  $temp = preg_replace('/\'/ms', '\\\'', $temp);
+  // $temp = preg_replace('/\'/ms', '\\\'', $temp);
 
   //Base 64 encode template
   $temp = base64_encode($temp);
@@ -64,6 +65,7 @@ foreach (glob("../sites/*/bespoke_blocks/*.html") as $filename){
   $sql .= "INSERT INTO `tbl_template_editor_blocks` (`block_name`, `block_account_id`, `block_type_id`, `block_type`, `block_html`, `block_category`) VALUES
           ('" . $blockName . "', '1222', '" . $lowerName . "', 'bespoke', '" . $temp . "',
           '" . $upperCaseName . "');\n";
+        }
 }
 
 $append = "bespoke_block_insert_head";
