@@ -20,7 +20,7 @@ foreach (glob("../pre_made/*/password_reset_venue.html") as $filename) {
   $temp = preg_replace('/<!-- VenueEnd -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedStart -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedEnd -->/ms', '', $temp);
-  $temp = preg_replace('/\'/ms', '\\\'', $temp);
+  $temp = preg_replace('/\'/ms', '[[RSQUO]]', $temp);
   $temp = removeWhiteSpace($temp);
 
   //Brand to uppercase
@@ -67,7 +67,9 @@ foreach (glob("../pre_made/*/password_reset_venue.html") as $filename) {
   $preHeader = null;
   foreach($passwordRows as $key => $row){
     $subject = $passwordRows[3];
+    $subject = preg_replace('/\'/ms', '[[RSQUO]]', $subject);
     $preHeader = $passwordRows[4];
+    $preHeader = preg_replace('/\'/ms', '[[RSQUO]]', $preHeader);
     $voucher = '0';
   }
 

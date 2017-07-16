@@ -19,7 +19,7 @@ foreach (glob("../pre_made/*/welcome_21_days_uk.html") as $filename) {
   $temp = preg_replace('/<!-- VenueEnd -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedStart -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedEnd -->/ms', '', $temp);
-  $temp = preg_replace('/\'/ms', '\\\'', $temp);
+  $temp = preg_replace('/\'/ms', '[[RSQUO]]', $temp);
   $temp = removeWhiteSpace($temp);
 
   //Brand to uppercase
@@ -52,7 +52,8 @@ foreach (glob("../pre_made/*/welcome_21_days_uk.html") as $filename) {
   //Get Email content
   $email = 'Welcome 3 + 21 Days';
   $welcomeRows = null;
-  $initialQuery = "SELECT * FROM `copy_iteration1_all` WHERE `email` = '" . $email . "'";
+  $table = 'copy_iteration3_' . $brand;
+  $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $welcomeRows = $row;
@@ -63,8 +64,10 @@ foreach (glob("../pre_made/*/welcome_21_days_uk.html") as $filename) {
   $preHeader = null;
   foreach($welcomeRows as $key => $row){
     $subject = $welcomeRows[3];
+    $subject = preg_replace('/\'/ms', '[[RSQUO]]', $subject);
     $preHeader = $welcomeRows[4];
-    $voucher = '0';
+    $preHeader = preg_replace('/\'/ms', '[[RSQUO]]', $preHeader);
+    $voucher = '1';
   }
 
   //Name declaration

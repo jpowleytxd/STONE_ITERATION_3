@@ -69,6 +69,21 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
 
   //Prep Voucher
   $voucherInstructions = $welcomeRows[9];
+  // $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+  // if(strpos($filename, 'proper_pubs') !== false){
+  //   $voucherSearch = 'YOUR VOUCHER';
+  //   $voucher = str_replace($voucherSearch, 'YOUR 10% PARTY VOUCHER', $voucher);
+  // }
+  // $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  // $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+  // $voucher = str_replace('$vouchercode$', $welcomeRows[10], $voucher);
+  // $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
+  // $voucher = preg_replace($search, '', $voucher);
+  // $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
+  // $voucher = preg_replace($search, '', $voucher);
+  // if(strpos($filename, 'proper_pubs') !== false){
+  //   $voucher = marginBuilder($voucher);
+  // }
   $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
   if(strpos($filename, 'proper_pubs') !== false){
     $voucherSearch = 'YOUR VOUCHER';
@@ -76,11 +91,6 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   }
   $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
   $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
-  $voucher = str_replace('$vouchercode$', $welcomeRows[10], $voucher);
-  $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
-  $voucher = preg_replace($search, '', $voucher);
-  $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
-  $voucher = preg_replace($search, '', $voucher);
   if(strpos($filename, 'proper_pubs') !== false){
     $voucher = marginBuilder($voucher);
   }

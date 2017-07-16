@@ -19,7 +19,7 @@ foreach (glob("../pre_made/*/birthday_3_weeks.html") as $filename) {
   $temp = preg_replace('/<!-- VenueEnd -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedStart -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedEnd -->/ms', '', $temp);
-  $temp = preg_replace('/\'/ms', '\\\'', $temp);
+  $temp = preg_replace('/\'/ms', '[[RSQUO]]', $temp);
   $temp = removeWhiteSpace($temp);
 
   //Brand to uppercase
@@ -52,7 +52,8 @@ foreach (glob("../pre_made/*/birthday_3_weeks.html") as $filename) {
   //Get Email content
   $email = 'Birthday -3 weeks';
   $birthdayRows = null;
-  $initialQuery = "SELECT * FROM `copy_iteration1_all` WHERE `email` = '" . $email . "'";
+  $table = 'copy_iteration3_' . $brand;
+  $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $birthdayRows = $row;
@@ -63,7 +64,9 @@ foreach (glob("../pre_made/*/birthday_3_weeks.html") as $filename) {
   $preHeader = null;
   foreach($birthdayRows as $key => $row){
     $subject = $birthdayRows[3];
+    $subject = preg_replace('/\'/ms', '[[RSQUO]]', $subject);
     $preHeader = $birthdayRows[4];
+    $preHeader = preg_replace('/\'/ms', '[[RSQUO]]', $preHeader);
     $voucher = '0';
   }
 

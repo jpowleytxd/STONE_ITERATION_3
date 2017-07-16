@@ -79,7 +79,7 @@ foreach(glob("../sites/*/templates/*_branded.html") as $filename){
   if($brand === 'classic_inns'){
     $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $textTwo . $largeSpacer;
   } else{
-    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $lineSpacer . $textTwo . $largeSpacer;
+    $insert = $image . $largeSpacer . $heading . $emptySpacer . $textOne . $emptySpacer . $textTwo . $largeSpacer;
   }
   $append = "auto_wifi_uk";
 

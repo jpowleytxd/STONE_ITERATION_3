@@ -20,7 +20,7 @@ foreach (glob("../pre_made/*/password_reset_brand.html") as $filename) {
   $temp = preg_replace('/<!-- VenueEnd -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedStart -->/ms', '', $temp);
   $temp = preg_replace('/<!-- BrandedEnd -->/ms', '', $temp);
-  $temp = preg_replace('/\'/ms', '\\\'', $temp);
+  $temp = preg_replace('/\'/ms', '[[RSQUO]]', $temp);
   $temp = removeWhiteSpace($temp);
 
   //Brand to uppercase
@@ -56,7 +56,7 @@ foreach (glob("../pre_made/*/password_reset_brand.html") as $filename) {
   //Get Email content
   $email = 'Forgotten Password';
   $table = 'copy_iteration3_' . $brand;
-    $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
+  $initialQuery = "SELECT * FROM `" . $table . "` WHERE `email` = '" . $email . "'";
   $rows = databaseQuery($initialQuery);
   foreach($rows as $key => $row){
     $passwordRows = $row;
@@ -67,7 +67,9 @@ foreach (glob("../pre_made/*/password_reset_brand.html") as $filename) {
   $preHeader = null;
   foreach($passwordRows as $key => $row){
     $subject = $passwordRows[3];
+    $subject = preg_replace('/\'/ms', '[[RSQUO]]', $subject);
     $preHeader = $passwordRows[4];
+    $preHeader = preg_replace('/\'/ms', '[[RSQUO]]', $preHeader);
     $voucher = '0';
   }
 

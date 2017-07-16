@@ -58,7 +58,7 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
 
     //Prep Text One
     $welcomeRows[5] = str_replace('"', '', $welcomeRows[5]);
-    $welcomeRows[5] = str_replace("'", '&apos;', $welcomeRows[5]);
+    // $welcomeRows[5] = str_replace("'", '&apos;', $welcomeRows[5]);
     $textOne = str_replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales vehicula tellus pellentesque malesuada. Integer malesuada magna felis, id rutrum leo volutpat eget. Morbi finibus et diam in placerat. Suspendisse magna enim, pharetra at erat vel, consequat facilisis mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla est velit, lobortis eu tincidunt sit amet, semper et lorem.', $welcomeRows[5], $textOne);
     $styleInsert = 'style="Margin-top: 15px; Margin-bottom: 15px; color: ' . $textColor . ';font-weight: normal; font-family: ' . $font . ';"';
     $textOne = preg_replace('/##(.+?)##/m', '<p ' . $styleInsert . '>$1</p>', $textOne);
@@ -74,17 +74,27 @@ foreach(glob('../sites/*/templates/*_branded.html') as $filename){
 
     if(strpos($filename, 'classic_inns') === false){
       $voucherInstructions = $welcomeRows[9];
-      $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
-      $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-      $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
-      $voucher = str_replace('$vouchercode$', $welcomeRows[10], $voucher);
-      $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
-      $voucher = preg_replace($search, '', $voucher);
-      $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
-      $voucher = preg_replace($search, '', $voucher);
-      if(strpos($filename, 'proper_pubs') !== false){
-        $voucher = marginBuilder($voucher);
-      }
+    //   $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+    //   $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    //   $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+    //   $voucher = str_replace('$vouchercode$', $welcomeRows[10], $voucher);
+    //   $search = '/<!--valid_from_start-->\s*.*\s*.*\s*<!--valid_from_end-->/';
+    //   $voucher = preg_replace($search, '', $voucher);
+    //   $search = '/<!--customer_start-->\s*.*\s*.*\s*<!--customer_end-->/';
+    //   $voucher = preg_replace($search, '', $voucher);
+    //   if(strpos($filename, 'proper_pubs') !== false){
+    //     $voucher = marginBuilder($voucher);
+    //   }
+        $voucher = file_get_contents('../sites/' . $brand . '/bespoke_blocks/' . $brand . '_voucher.html');
+        if(strpos($filename, 'proper_pubs') !== false){
+          $voucherSearch = 'YOUR VOUCHER';
+          $voucher = str_replace($voucherSearch, 'YOUR FREE DRINK VOUCHER', $voucher);
+        }
+        $voucherSearch = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+        $voucher = str_replace($voucherSearch, $voucherInstructions, $voucher);
+        if(strpos($filename, 'proper_pubs') !== false){
+          $voucher = marginBuilder($voucher);
+        }
     }
 
     //Prep Text Two
